@@ -1,3 +1,3 @@
-const ver = 1;
+const ver = 2;
 
 console.log(`yes ${ver}`);
