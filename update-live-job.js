@@ -24,6 +24,8 @@ const changes = readdirSync(cwd)
     .filter(d => !!d)
     .sort((a, b) => a.number - b.number)
     .map((d, i, all) => {
+        console.log(`Evaluating ${JSON.stringify(d)}`);
+
         if (!d.isLive && isLast(i, all)) {
             return commission(d);
         }
