@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm install",
     "do-it": "node ./realSimple.js"
   },
   "repository": {
@@ -16,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/ssmock/jenkins-poc/issues"
   },
-  "homepage": "https://github.com/ssmock/jenkins-poc#readme"
+  "homepage": "https://github.com/ssmock/jenkins-poc#readme",
+  "devDependencies": {
+    "typescript": "^3.1.6"
+  },
+  "dependencies": {
+    "@types/chalk": "^2.2.0",
+    "chalk": "^2.4.1"
+  }
 }
