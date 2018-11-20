@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm install && tsc",
-    "update-live-job": "node ./update-job-catalog.js",
+    "update-live-job": "node ./update-live-job.js",
     "do-it": "node ./dist/index.js"
   },
   "repository": {
