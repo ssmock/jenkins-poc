@@ -1,15 +1,20 @@
+const process = require("process");
 const chalk = require("chalk");
 const { readdirSync, statSync, renameSync } = require('fs')
 const { join } = require('path')
 
 const buildDirectoryPattern = /^build-(\d+)(-live)?$/;
 
-const cwd = "./";
+const parentDir = process.argv[2];
 
-console.log("Found subdirs: " + readdirSync(cwd).length);
+if (!parentDir) {
+    throw "An argument indicating the parent name must be provided.";
+}
 
-const changes = readdirSync(cwd)
-    .filter(whereIsFsEntryDirectory(cwd))
+console.log(`Updating the live job definition in ${parentDir}...`);
+
+const changes = readdirSync(parentDir)
+    .filter(whereIsFsEntryDirectory(parentDir))
     .map(d => {
         const parsed = buildDirectoryPattern.exec(d);
 
@@ -18,7 +23,7 @@ const changes = readdirSync(cwd)
         }
 
         return {
-            dir: join(cwd, d),
+            dir: join(parentDir, d),
             number: parseInt(parsed[1]),
             isLive: isLiveDirectory(d)
         };
@@ -41,17 +46,17 @@ const changes = readdirSync(cwd)
     .filter(d => !!d);
 
 if (!changes.length) {
-    console.log(chalk.yellow("No changes."));
+    console.log(chalk.yellow("...No changes required."));
 
     return;
 }
 
 changes.forEach(c => {
-    if(c.isLive){
-        return console.log(chalk.green(`Build ${c.number} is now live!`));
+    if (c.isLive) {
+        return console.log(chalk.green(`...Build ${c.number} is now live!`));
     }
 
-    console.log(chalk.red(`Build ${c.number} is no longer live.`));
+    console.log(chalk.red(`...Build ${c.number} is no longer live.`));
 });
 
 
@@ -84,9 +89,9 @@ function isLast(i, all) {
 }
 
 function nonLiveFolderNameFor(buildNumber) {
-    return join(cwd, `build-${buildNumber}`);
+    return join(parentDir, `build-${buildNumber}`);
 }
 
 function liveFolderNameFor(buildNumber) {
-    return join(cwd, `build-${buildNumber}-live`);
+    return join(parentDir, `build-${buildNumber}-live`);
 }
