@@ -1,0 +1,20 @@
+{
+  "name": "jenkins-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "do-it": "node ./realSimple.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssmock/jenkins-poc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssmock/jenkins-poc/issues"
+  },
+  "homepage": "https://github.com/ssmock/jenkins-poc#readme"
+}
