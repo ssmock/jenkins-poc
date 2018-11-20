@@ -6,6 +6,8 @@ const buildDirectoryPattern = /^build-(\d+)(-live)?$/;
 
 const cwd = "./";
 
+console.log("Found subdirs: " + readdirSync(cwd).length);
+
 const changes = readdirSync(cwd)
     .filter(whereIsFsEntryDirectory(cwd))
     .map(d => {
