@@ -1,10 +1,11 @@
 {
   "name": "jenkins-poc",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "npm install && tsc",
+    "update-live-job": "node ./update-job-catalog.js",
     "do-it": "node ./dist/index.js"
   },
   "repository": {
