@@ -8,7 +8,7 @@ const buildDirectoryPattern = /^build-(\d+)(-live)?$/;
 const parentDir = process.argv[2];
 
 if (!parentDir) {
-    throw "An argument indicating the parent name must be provided.";
+    throw "An argument indicating the parent name must be provided as the first argument.";
 }
 
 console.log(`Updating the live job definition in ${parentDir}...`);
@@ -24,6 +24,7 @@ const changes = readdirSync(parentDir)
 
         return {
             dir: join(parentDir, d),
+            ageDays: getAgeDays(statSync(parentDir).birthTime),
             number: parseInt(parsed[1]),
             isLive: isLiveDirectory(d)
         };
@@ -31,8 +32,6 @@ const changes = readdirSync(parentDir)
     .filter(d => !!d)
     .sort((a, b) => a.number - b.number)
     .map((d, i, all) => {
-        console.log(`Evaluating ${JSON.stringify(d)}`);
-
         if (!d.isLive && isLast(i, all)) {
             return commission(d);
         }
@@ -59,7 +58,6 @@ changes.forEach(c => {
     console.log(chalk.red(`...Build ${c.number} is no longer live.`));
 });
 
-
 function decommission(d) {
     renameSync(d.dir, nonLiveFolderNameFor(d.number));
 
@@ -74,6 +72,17 @@ function commission(d) {
     return Object.assign({}, d, {
         isLive: true
     });
+}
+
+function isOld(d) {
+    return d.ageDays > maxAgeDays;
+}
+
+function getAgeDays(date) {
+    const ageMs = new Date() - date;
+    const ageDays = ageMs / (1000 * 60 * 60 * 24);
+
+    return ageDays;
 }
 
 function whereIsFsEntryDirectory(d) {
