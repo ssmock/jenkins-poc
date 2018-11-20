@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm install",
-    "do-it": "node ./realSimple.js"
+    "build": "npm install && tsc",
+    "do-it": "node ./dist/index.js"
   },
   "repository": {
     "type": "git",
